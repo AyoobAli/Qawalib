@@ -43,7 +43,6 @@ $tp->setVariable("UserData", [
     [
         "id" => '2',
         "name" => "Name",
-        "number" => "555555",
         "email" => "user@example.com"
     ]
 ]);
