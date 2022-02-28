@@ -1,0 +1,14 @@
+    <table>
+        <tr>
+            <td><!--{$lang_UserID}--></td>
+            <td><!--{$lang_UserName}--></td>
+            <td><!--{$lang_UserEmail}--></td>
+        </tr>
+    <!--{#loop|$UserData}-->
+        <tr>
+            <td><!--{#item|id}--></td>
+            <td><!--{#item|name|html}--></td>
+            <td><!--{#item|email|html}--></td>
+        </tr>
+    <!--{#endloop|$UserData}-->
+    </table>

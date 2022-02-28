@@ -6,8 +6,8 @@
  * Author: Ayoob Ali
  * Website: www.Ayoob.ae
  * License: GNU GPLv3
- * Version: v0.1.1
- * Date: 2022-02-25
+ * Version: v0.1.2
+ * Date: 2022-02-28
  */
 
 /**
@@ -417,6 +417,13 @@ class Qawalib
                     $string = urldecode($string);
                     break;
 
+                case 'int':
+                case 'num':
+                case 'number':
+                case 'integer':
+                    $string = intval($string);
+                    break;
+        
                 case 'html':
                 case 'code':
                     break;
@@ -501,16 +508,25 @@ class Qawalib
         return "";
     }
 
+    ###
+    ### Callback function to include templates within templates
+    ###
+    private function incHandle ($found) {
+        if ( is_array($found) && count($found) > 1 ) {
+            return $this->render($found[1], false);
+        }
+        return "";
+    }
 
     ###
     ### Render template file
     ###
     // Short name function for render()
-    public function r($name = "") {
-        return $this->render($name);
+    public function r($name = "", $update = true) {
+        return $this->render($name, $update);
     }
     // Original function
-    public function render($name = "") {
+    public function render($name = "", $update = true) {
         $tplContent = $this->loadTPL($name);
         $splitter = '<!--{#content#}-->';
         if (empty(trim($tplContent))) {
@@ -518,11 +534,18 @@ class Qawalib
         }
         $tplContent = preg_replace_callback("|<!--\{#LOOP\|\\$([\w\-]+)\}-->(.*)<!--\{#ENDLOOP\|\\$\\1\}-->|si", array($this,'loopHandle'), $tplContent);
         $tplContent = preg_replace_callback("|<!--\{\\$([\w\-]+)((?:\|[\w\-]+)+)?\}-->|", array($this,'varHandle'), $tplContent);
+        $tplContent = preg_replace_callback("|<!--\{#INC\|([\w\-]+)\}-->|si", array($this,'incHandle'), $tplContent);
         $contentVar = stripos($tplContent, $splitter);
         if ( $contentVar !== false ) {
             $tplContentNew = substr_replace($tplContent, $this->output, $contentVar, strlen($splitter));
+            if ( $update == false ) {
+                return $tplContentNew;
+            }
             $this->output = $tplContentNew;
         }else{
+            if ( $update == false ) {
+                return $tplContent;
+            }
             $this->output .= $tplContent;
         }
         return true;
