@@ -6,8 +6,8 @@
  * Author: Ayoob Ali
  * Website: www.Ayoob.ae
  * License: GNU GPLv3
- * Version: v0.1.2
- * Date: 2022-02-28
+ * Version: v0.1.3
+ * Date: 2022-04-10
  */
 
 /**
@@ -283,7 +283,6 @@ class Qawalib
         if ( is_dir($fullPath) ) {
             $this->language     = $language;
             $this->fullPath     = $fullPath;
-            $this->resetPrivateVariables();
             return true;
         }
         $this->msg("Error: Template location not found", 3);
@@ -527,6 +526,10 @@ class Qawalib
     }
     // Original function
     public function render($name = "", $update = true) {
+        $this->setPrivateVariable('templatePath', $this->templatePath);
+        $this->setPrivateVariable('theme', $this->theme);
+        $this->setPrivateVariable('language', $this->language);
+        $this->setPrivateVariable('fullPath', $this->fullPath);
         $tplContent = $this->loadTPL($name);
         $splitter = '<!--{#content#}-->';
         if (empty(trim($tplContent))) {

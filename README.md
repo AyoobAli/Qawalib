@@ -1,6 +1,6 @@
 # Qawalib
 
-<sub>[Qawalib v0.1.2 (Beta)]</sub>
+<sub>[Qawalib v0.1.3 (Beta)]</sub>
 
 Qawalib is a light and powerful Template Engine for PHP.
 
@@ -81,6 +81,10 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>
 
 ## Change Log
+
+[2022-04-10] v0.1.3 (Beta):
+
+- Added the template/theme information to the private variables (used with `<!--{$__fullPath}-->`, `<!--{$__language}-->`, etc...)
 
 [2022-02-28] v0.1.2 (Beta):
 
